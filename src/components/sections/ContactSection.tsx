@@ -1,5 +1,5 @@
-
 import React, { useState } from 'react';
+import axios from 'axios';
 import { Mail, Phone, User } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
@@ -14,45 +14,61 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
-import { sendEmail } from '../../utils/emailService';
 
 const ContactSection: React.FC = () => {
   const { toast } = useToast();
   const [isSending, setIsSending] = useState(false);
   const [formOpen, setFormOpen] = useState(false);
-  
+
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSending(true);
-    
+
+    // Captura dos dados do formulário
     const formData = new FormData(e.currentTarget);
     const name = formData.get('name') as string;
     const email = formData.get('email') as string;
     const phone = formData.get('phone') as string;
     const message = formData.get('message') as string;
-    
+
+    // Corpo do e-mail com os dados dinâmicos
+    const mailchimpData = {
+      email_address: email,  // O email do usuário
+      merge_fields: {
+        FNAME: name,         // Nome do usuário
+        PHONE: phone,        // Telefone do usuário
+        MESSAGE: message,    // Mensagem do usuário
+      }
+    };
+
     try {
-      const emailData = {
-        to_email: "leonardo.jesus@tramar.com.br",
-        from_name: name,
-        from_email: email,
-        phone: phone,
-        message: message,
-      };
-      
-      await sendEmail(emailData);
-      
+      const response = await axios.post(
+        'https://us13.api.mailchimp.com/3.0/lists/fc39fe9791/members',  // Substitua com seu ID de lista
+        mailchimpData,
+        {
+          headers: {
+            'Authorization': `Bearer 53f399503c03a0f0c540031f39522ab5-us13`,  // Substitua com sua chave de API
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+
+      if (response.status !== 200) {
+        throw new Error('Falha ao adicionar o contato à lista');
+      }
+
+      // Sucesso, exibe mensagem
       toast({
         title: "Mensagem enviada com sucesso!",
         description: "Agradecemos seu contato. Retornaremos em breve.",
         variant: "default",
       });
-      
+
       const form = e.target as HTMLFormElement;
       form.reset();
       setFormOpen(false);
     } catch (error) {
-      console.error("Error sending email:", error);
+      console.error("Erro ao enviar o e-mail:", error);
       toast({
         title: "Erro ao enviar mensagem",
         description: "Por favor, tente novamente mais tarde ou entre em contato por telefone.",
@@ -71,7 +87,7 @@ const ContactSection: React.FC = () => {
           <p className="text-lg text-gray-700 mb-10">
             Estamos à disposição para atender suas necessidades e responder a todas as suas dúvidas.
           </p>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
             <div className="bg-gradient-to-br from-water-50 to-white p-8 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300">
               <h3 className="text-xl font-semibold mb-4">Fale Conosco</h3>
@@ -85,7 +101,7 @@ const ContactSection: React.FC = () => {
                 <span>+55 (11) 4633-3700</span>
               </a>
             </div>
-            
+
             <div className="bg-gradient-to-br from-water-50 to-white p-8 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300">
               <h3 className="text-xl font-semibold mb-4">Visite-nos</h3>
               <p className="mb-6">Conheça nossa fábrica e fontes naturais.</p>
@@ -95,7 +111,7 @@ const ContactSection: React.FC = () => {
               </address>
             </div>
           </div>
-          
+
           <Dialog open={formOpen} onOpenChange={setFormOpen}>
             <DialogTrigger asChild>
               <Button className="bg-water-600 hover:bg-water-700 text-white px-8 py-3 rounded-full font-medium transition-all duration-300 shadow-lg">Enviar Mensagem</Button>
@@ -123,7 +139,7 @@ const ContactSection: React.FC = () => {
                     />
                   </div>
                 </div>
-                
+
                 <div className="space-y-2">
                   <Label htmlFor="email">Email</Label>
                   <div className="relative">
@@ -140,7 +156,7 @@ const ContactSection: React.FC = () => {
                     />
                   </div>
                 </div>
-                
+
                 <div className="space-y-2">
                   <Label htmlFor="phone">Telefone</Label>
                   <div className="relative">
@@ -155,7 +171,7 @@ const ContactSection: React.FC = () => {
                     />
                   </div>
                 </div>
-                
+
                 <div className="space-y-2">
                   <Label htmlFor="message">Mensagem</Label>
                   <Textarea 
@@ -166,7 +182,7 @@ const ContactSection: React.FC = () => {
                     className="min-h-[120px]" 
                   />
                 </div>
-                
+
                 <div className="flex justify-end">
                   <Button 
                     type="submit" 

@@ -1,42 +1,34 @@
+const axios = require('axios');
 
-import emailjs from 'emailjs-com';
+const sendEmail = async (emailData) => {
+  const apiKey = '53f399503c03a0f0c540031f39522ab5-us13';
+  const serverPrefix = apiKey.split('-')[1];
+  const url = `https://${serverPrefix}.api.mailchimp.com/3.0/messages/send`;
 
-// Initialize emailjs with your credentials
-const SERVICE_ID = 'service_3gldyxp';  // Confirmed service ID
-const TEMPLATE_ID = 'template_47w0y7q';
-const USER_ID = 'yP8sGnvYcxXTAQJMP';
+  const mailchimpData = {
+    message: {
+      from_email: emailData.from_email,
+      subject: 'Nova mensagem de contato',
+      text: `Nome: ${emailData.from_name}\nEmail: ${emailData.from_email}\nTelefone: ${emailData.phone}\nMensagem: ${emailData.message}`,
+      to: [
+        {
+          email: 'leonardo.jesus@tramar.com.br',
+          type: 'to',
+        },
+      ],
+    },
+  };
 
-interface EmailData {
-  to_email: string;
-  from_name: string;
-  from_email: string;
-  phone?: string;
-  message: string;
-}
-
-export const sendEmail = async (data: EmailData): Promise<any> => {
   try {
-    const templateParams = {
-      to_email: data.to_email,
-      from_name: data.from_name,
-      from_email: data.from_email,
-      phone: data.phone || 'Não informado',
-      message: data.message,
-    };
-
-    // Initialize EmailJS correctly
-    emailjs.init(USER_ID);
-    
-    const response = await emailjs.send(
-      SERVICE_ID,
-      TEMPLATE_ID,
-      templateParams
-    );
-    
-    console.log('Email sent successfully:', response);
-    return response;
+    await axios.post(url, mailchimpData, {
+      auth: {
+        username: 'anystring',
+        password: apiKey,
+      },
+    });
   } catch (error) {
-    console.error('Error sending email:', error);
-    throw error;
+    throw new Error('Failed to send email');
   }
 };
+
+module.exports = { sendEmail };
