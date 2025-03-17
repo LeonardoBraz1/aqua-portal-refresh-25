@@ -1,4 +1,3 @@
-
 import React from 'react';
 import Navigation from '../components/Navigation';
 import Footer from '../components/Footer';
@@ -29,7 +28,6 @@ const Index = () => {
     e.preventDefault();
     setIsSending(true);
     
-    // Get form data
     const formData = new FormData(e.currentTarget);
     const name = formData.get('name') as string;
     const email = formData.get('email') as string;
@@ -52,7 +50,6 @@ const Index = () => {
         description: "Entraremos em contato em breve.",
       });
       
-      // Reset form
       const form = e.target as HTMLFormElement;
       form.reset();
     } catch (error) {
@@ -229,7 +226,6 @@ const Index = () => {
               </div>
             </div>
             
-            {/* Contact Form Dialog */}
             <Dialog>
               <DialogTrigger asChild>
                 <Button className="bg-water-600 hover:bg-water-700 text-white px-6 py-3 rounded-full font-medium transition-all duration-300 shadow-lg">Formulário de Contato</Button>
