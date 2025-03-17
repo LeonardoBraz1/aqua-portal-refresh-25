@@ -171,4 +171,17 @@
     background-size: cover;
     background-repeat: no-repeat;
   }
+  
+  /* New wave animation */
+  @keyframes moveWave {
+    0% {
+      transform: translateX(-25%);
+    }
+    50% {
+      transform: translateX(-15%);
+    }
+    100% {
+      transform: translateX(-25%);
+    }
+  }
 }

@@ -7,8 +7,7 @@ import MissionSection from '../components/sections/MissionSection';
 import ProductsSection from '../components/sections/ProductsSection';
 import QualitySection from '../components/sections/QualitySection';
 import ContactSection from '../components/sections/ContactSection';
-import ProductBenefits from '../components/products/ProductBenefits';
-import WholesaleSection from '../components/products/WholesaleSection';
+import DiferenciaisSection from '../components/sections/DiferenciaisSection';
 import { products } from '../data/ProductsData';
 
 const Index = () => {
@@ -19,11 +18,10 @@ const Index = () => {
       <HeroSection />
       <MissionSection />
       <ProductsSection products={products} />
+      <DiferenciaisSection />
       <QualitySection />
       <ContactSection />
       
-      <ProductBenefits />
-      <WholesaleSection />
       <Footer />
     </div>
   );

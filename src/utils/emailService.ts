@@ -2,7 +2,7 @@
 import emailjs from 'emailjs-com';
 
 // Initialize emailjs with your credentials
-const SERVICE_ID = 'service_3gldyxp';  // Updated service ID
+const SERVICE_ID = 'service_3gldyxp';  // Confirmed service ID
 const TEMPLATE_ID = 'template_47w0y7q';
 const USER_ID = 'yP8sGnvYcxXTAQJMP';
 
