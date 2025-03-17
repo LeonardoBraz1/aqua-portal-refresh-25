@@ -1,9 +1,18 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Facebook, Instagram, Twitter, MapPin, Phone, Mail, Clock } from 'lucide-react';
 
 const Footer = () => {
+  const scrollToSection = (sectionId: string) => {
+    const section = document.getElementById(sectionId);
+    if (section) {
+      window.scrollTo({
+        top: section.offsetTop - 80, // Offset for the navbar height
+        behavior: 'smooth'
+      });
+    }
+  };
+
   return (
     <footer className="bg-water-950 text-white/90 pt-16 pb-8">
       <div className="container mx-auto px-6">
@@ -14,7 +23,7 @@ const Footer = () => {
               <span className="ml-2">de Cabreúva</span>
             </h2>
             <p className="text-white/70 leading-relaxed">
-              Comprometidos com a pureza e qualidade das águas naturais há mais de 20 anos, proporcionando saúde e bem-estar para você e sua família.
+              Comprometidos com a pureza e qualidade das águas naturais, proporcionando saúde e bem-estar para você e sua família.
             </p>
             <div className="flex space-x-4">
               <a 
@@ -51,34 +60,69 @@ const Footer = () => {
             <h3 className="text-xl font-semibold mb-6">Links Rápidos</h3>
             <ul className="space-y-3">
               <li>
-                <Link to="/" className="text-white/70 hover:text-water-400 transition-colors duration-300 flex items-center">
+                <a 
+                  href="#home" 
+                  className="text-white/70 hover:text-water-400 transition-colors duration-300 flex items-center"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    scrollToSection('home');
+                  }}
+                >
                   <span className="h-1 w-4 bg-water-700 rounded-full mr-2"></span>
                   Home
-                </Link>
+                </a>
               </li>
               <li>
-                <Link to="/historia" className="text-white/70 hover:text-water-400 transition-colors duration-300 flex items-center">
+                <a 
+                  href="#nossa-missao" 
+                  className="text-white/70 hover:text-water-400 transition-colors duration-300 flex items-center"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    scrollToSection('nossa-missao');
+                  }}
+                >
                   <span className="h-1 w-4 bg-water-700 rounded-full mr-2"></span>
-                  História
-                </Link>
+                  Nossa Missão
+                </a>
               </li>
               <li>
-                <Link to="/produtos" className="text-white/70 hover:text-water-400 transition-colors duration-300 flex items-center">
+                <a 
+                  href="#produtos" 
+                  className="text-white/70 hover:text-water-400 transition-colors duration-300 flex items-center"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    scrollToSection('produtos');
+                  }}
+                >
                   <span className="h-1 w-4 bg-water-700 rounded-full mr-2"></span>
                   Produtos
-                </Link>
+                </a>
               </li>
               <li>
-                <Link to="/qualidade" className="text-white/70 hover:text-water-400 transition-colors duration-300 flex items-center">
+                <a 
+                  href="#qualidade" 
+                  className="text-white/70 hover:text-water-400 transition-colors duration-300 flex items-center"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    scrollToSection('qualidade');
+                  }}
+                >
                   <span className="h-1 w-4 bg-water-700 rounded-full mr-2"></span>
                   Qualidade
-                </Link>
+                </a>
               </li>
               <li>
-                <Link to="/contato" className="text-white/70 hover:text-water-400 transition-colors duration-300 flex items-center">
+                <a 
+                  href="#contato" 
+                  className="text-white/70 hover:text-water-400 transition-colors duration-300 flex items-center"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    scrollToSection('contato');
+                  }}
+                >
                   <span className="h-1 w-4 bg-water-700 rounded-full mr-2"></span>
                   Contato
-                </Link>
+                </a>
               </li>
             </ul>
           </div>

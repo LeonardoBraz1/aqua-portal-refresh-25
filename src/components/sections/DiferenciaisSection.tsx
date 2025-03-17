@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Droplets, Award, ShieldCheck, Recycle, ThumbsUp, Clock } from 'lucide-react';
 
@@ -66,21 +65,21 @@ const DiferenciaisSection = () => {
               Nossos clientes confiam na qualidade da nossa água, com 97% de aprovação em pesquisas de satisfação realizadas.
             </p>
           </div>
-          
+
           <div className="bg-water-50 rounded-xl p-8 shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col items-center text-center">
             <div className="w-16 h-16 bg-water-100 rounded-full flex items-center justify-center mb-6">
               <Clock size={32} className="text-water-600" />
             </div>
-            <h3 className="text-xl font-semibold mb-3 text-gray-800">Tradição e Experiência</h3>
+            <h3 className="text-xl font-semibold mb-3 text-gray-800">Inovação e Tecnologia</h3>
             <p className="text-gray-600">
-              Com mais de 25 anos de atuação no mercado, acumulamos experiência e conhecimento para oferecer sempre o melhor.
+              Estamos sempre na vanguarda, utilizando as mais recentes tecnologias para garantir a melhor qualidade e eficiência em nossos serviços.
             </p>
           </div>
         </div>
         
         <div className="mt-16 text-center">
           <p className="text-xl text-water-700 font-medium max-w-3xl mx-auto">
-            "Água de Cabreúva: a escolha natural para quem valoriza qualidade, saúde e bem-estar."
+            "Águas de Cabreúva: a escolha natural para quem valoriza qualidade, saúde e bem-estar."
           </p>
         </div>
       </div>
