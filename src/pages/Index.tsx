@@ -11,17 +11,16 @@ const Index = () => {
       <Navigation />
       
       {/* Hero Section */}
-      <section className="hero-section bg-hero-pattern">
-        <div className="absolute inset-0 bg-gradient-to-b from-water-900/40 to-water-50/80"></div>
-        <div className="container mx-auto px-6 relative z-10 pt-32 pb-20">
+      <section className="relative min-h-screen bg-gradient-to-b from-water-800 to-water-600 flex items-center">
+        <div className="container mx-auto px-6 relative z-10 py-20">
           <div className="max-w-3xl mx-auto text-center">
-            <h1 className="text-4xl md:text-6xl font-bold text-white mb-6 drop-shadow-lg animate-fade-in">
+            <h1 className="text-4xl md:text-6xl font-bold text-white mb-6 drop-shadow-lg">
               Água Mineral Natural
             </h1>
-            <p className="text-xl md:text-2xl text-white/90 mb-8 drop-shadow-md animate-fade-in" style={{ animationDelay: '0.2s' }}>
+            <p className="text-xl md:text-2xl text-white/90 mb-8 drop-shadow-md">
               Pura, Refrescante e diretamente da Natureza
             </p>
-            <div className="animate-fade-in" style={{ animationDelay: '0.4s' }}>
+            <div>
               <Link to="/produtos" className="btn-primary inline-flex items-center gap-2">
                 Conheça Nossos Produtos <Droplets size={18} />
               </Link>
@@ -37,7 +36,7 @@ const Index = () => {
       </section>
       
       {/* About Section */}
-      <section className="py-20 px-6">
+      <section className="py-20 px-6 bg-white">
         <div className="container mx-auto">
           <div className="max-w-4xl mx-auto text-center">
             <h2 className="section-title">Nossa Missão</h2>
@@ -86,7 +85,7 @@ const Index = () => {
           <h2 className="section-title text-center mb-16">Nossos Produtos</h2>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div className="product-card rounded-xl overflow-hidden">
+            <div className="product-card rounded-xl overflow-hidden bg-white shadow-lg">
               <LazyImage 
                 src="https://images.unsplash.com/photo-1564419320461-6870880221ad?q=80&w=987" 
                 alt="Água Mineral 500ml"
@@ -99,7 +98,7 @@ const Index = () => {
               </div>
             </div>
             
-            <div className="product-card rounded-xl overflow-hidden">
+            <div className="product-card rounded-xl overflow-hidden bg-white shadow-lg">
               <LazyImage 
                 src="https://images.unsplash.com/photo-1616118132534-381148898bb4?q=80&w=987" 
                 alt="Água Mineral 1.5L"
@@ -112,7 +111,7 @@ const Index = () => {
               </div>
             </div>
             
-            <div className="product-card rounded-xl overflow-hidden">
+            <div className="product-card rounded-xl overflow-hidden bg-white shadow-lg">
               <LazyImage 
                 src="https://images.unsplash.com/photo-1606856110002-d0991ce78250?q=80&w=987" 
                 alt="Água Mineral 5L"
@@ -133,7 +132,7 @@ const Index = () => {
       </section>
       
       {/* Quality Section */}
-      <section className="py-20 px-6 bg-quality-bg bg-cover bg-center">
+      <section className="py-20 px-6 bg-gradient-to-r from-water-100 to-water-200">
         <div className="container mx-auto relative z-10">
           <div className="max-w-2xl mx-auto glass-card p-10 rounded-xl">
             <h2 className="section-title text-center mb-8">Compromisso com a Qualidade</h2>
@@ -171,7 +170,7 @@ const Index = () => {
       </section>
       
       {/* Contact CTA */}
-      <section className="py-20 px-6">
+      <section className="py-20 px-6 bg-white">
         <div className="container mx-auto">
           <div className="max-w-4xl mx-auto text-center">
             <h2 className="section-title mb-6">Entre em Contato</h2>
@@ -180,7 +179,7 @@ const Index = () => {
             </p>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-              <div className="bg-gray-50 p-8 rounded-xl">
+              <div className="bg-gray-50 p-8 rounded-xl shadow-md">
                 <h3 className="text-xl font-semibold mb-4">Fale Conosco</h3>
                 <p className="mb-6">Nossa equipe está pronta para atendê-lo.</p>
                 <a href="mailto:contato@aguasdecabreuva.com.br" className="text-water-600 hover:underline block mb-3">
@@ -191,7 +190,7 @@ const Index = () => {
                 </a>
               </div>
               
-              <div className="bg-gray-50 p-8 rounded-xl">
+              <div className="bg-gray-50 p-8 rounded-xl shadow-md">
                 <h3 className="text-xl font-semibold mb-4">Visite-nos</h3>
                 <p className="mb-6">Conheça nossa fábrica e fontes naturais.</p>
                 <address className="not-italic text-gray-700">
