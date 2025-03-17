@@ -1,18 +1,44 @@
 
-import React from 'react';
+import React, { useRef } from 'react';
 import Navigation from '../components/Navigation';
 import Footer from '../components/Footer';
 import LazyImage from '../components/LazyImage';
-import { ArrowDown, Droplets } from 'lucide-react';
+import { ArrowDown, Droplets, Mail, Phone, User } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { useToast } from "@/hooks/use-toast";
 
 const Index = () => {
+  const { toast } = useToast();
+  
+  const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    toast({
+      title: "Mensagem enviada!",
+      description: "Entraremos em contato em breve.",
+    });
+    
+    // Reset form
+    const form = e.target as HTMLFormElement;
+    form.reset();
+  };
+
   return (
     <div className="min-h-screen flex flex-col">
       <Navigation />
       
       {/* Hero Section */}
-      <section className="relative min-h-screen bg-gradient-to-b from-water-800 to-water-600 flex items-center">
+      <section id="home" className="relative min-h-screen bg-gradient-to-b from-water-800 to-water-600 flex items-center">
         <div className="container mx-auto px-6 relative z-10 py-20">
           <div className="max-w-3xl mx-auto text-center">
             <h1 className="text-4xl md:text-6xl font-bold text-white mb-6 drop-shadow-lg">
@@ -22,22 +48,22 @@ const Index = () => {
               Pura, Refrescante e diretamente da Natureza
             </p>
             <div>
-              <Link to="/produtos" className="btn-primary inline-flex items-center gap-2">
+              <Link to="#produtos" className="btn-primary inline-flex items-center gap-2">
                 Conheça Nossos Produtos <Droplets size={18} />
               </Link>
             </div>
           </div>
         </div>
         
-        <div className="scroll-indicator">
+        <a href="#nossa-missao" className="scroll-indicator">
           <ArrowDown size={24} className="text-white" />
-        </div>
+        </a>
         
         <div className="water-wave"></div>
       </section>
       
       {/* About Section */}
-      <section className="py-20 px-6 bg-white">
+      <section id="nossa-missao" className="py-20 px-6 bg-white">
         <div className="container mx-auto">
           <div className="max-w-4xl mx-auto text-center">
             <h2 className="section-title">Nossa Missão</h2>
@@ -74,14 +100,14 @@ const Index = () => {
             </div>
             
             <div className="mt-16">
-              <Link to="/historia" className="btn-outline">Conheça Nossa História</Link>
+              <Link to="#historia" className="btn-outline">Conheça Nossa História</Link>
             </div>
           </div>
         </div>
       </section>
       
       {/* Featured Products */}
-      <section className="py-20 px-6 bg-water-50">
+      <section id="produtos" className="py-20 px-6 bg-water-50">
         <div className="container mx-auto">
           <h2 className="section-title text-center mb-16">Nossos Produtos</h2>
           
@@ -95,7 +121,7 @@ const Index = () => {
               <div className="product-overlay">
                 <h3 className="text-xl font-bold mb-2">Água Mineral 500ml</h3>
                 <p className="text-white/90 mb-4">Perfeita para o dia a dia, hidratação prática e pura.</p>
-                <Link to="/produtos" className="text-white underline">Ver detalhes</Link>
+                <Link to="#produtos" className="text-white underline">Ver detalhes</Link>
               </div>
             </div>
             
@@ -108,7 +134,7 @@ const Index = () => {
               <div className="product-overlay">
                 <h3 className="text-xl font-bold mb-2">Água Mineral 1.5L</h3>
                 <p className="text-white/90 mb-4">Ideal para famílias, hidratação para todos os momentos.</p>
-                <Link to="/produtos" className="text-white underline">Ver detalhes</Link>
+                <Link to="#produtos" className="text-white underline">Ver detalhes</Link>
               </div>
             </div>
             
@@ -121,19 +147,19 @@ const Index = () => {
               <div className="product-overlay">
                 <h3 className="text-xl font-bold mb-2">Água Mineral 5L</h3>
                 <p className="text-white/90 mb-4">Perfeita para escritórios e consumo residencial.</p>
-                <Link to="/produtos" className="text-white underline">Ver detalhes</Link>
+                <Link to="#produtos" className="text-white underline">Ver detalhes</Link>
               </div>
             </div>
           </div>
           
           <div className="text-center mt-12">
-            <Link to="/produtos" className="btn-primary">Ver Todos os Produtos</Link>
+            <Link to="#produtos" className="btn-primary">Ver Todos os Produtos</Link>
           </div>
         </div>
       </section>
       
       {/* Quality Section */}
-      <section className="py-20 px-6 bg-gradient-to-r from-water-100 to-water-200">
+      <section id="qualidade" className="py-20 px-6 bg-gradient-to-r from-water-100 to-water-200">
         <div className="container mx-auto relative z-10">
           <div className="max-w-2xl mx-auto glass-card p-10 rounded-xl">
             <h2 className="section-title text-center mb-8">Compromisso com a Qualidade</h2>
@@ -164,14 +190,14 @@ const Index = () => {
             </ul>
             
             <div className="text-center">
-              <Link to="/qualidade" className="btn-outline">Saiba Mais</Link>
+              <Link to="#qualidade" className="btn-outline">Saiba Mais</Link>
             </div>
           </div>
         </div>
       </section>
       
       {/* Contact CTA */}
-      <section className="py-20 px-6 bg-white">
+      <section id="contato" className="py-20 px-6 bg-white">
         <div className="container mx-auto">
           <div className="max-w-4xl mx-auto text-center">
             <h2 className="section-title mb-6">Entre em Contato</h2>
@@ -201,7 +227,68 @@ const Index = () => {
               </div>
             </div>
             
-            <Link to="/contato" className="btn-primary">Formulário de Contato</Link>
+            {/* Contact Form Dialog */}
+            <Dialog>
+              <DialogTrigger asChild>
+                <Button className="btn-primary">Formulário de Contato</Button>
+              </DialogTrigger>
+              <DialogContent className="sm:max-w-[425px]">
+                <DialogHeader>
+                  <DialogTitle>Envie sua mensagem</DialogTitle>
+                  <DialogDescription>
+                    Preencha o formulário abaixo e entraremos em contato o mais breve possível.
+                  </DialogDescription>
+                </DialogHeader>
+                <form onSubmit={handleFormSubmit} className="space-y-4 mt-4">
+                  <div className="space-y-2">
+                    <label htmlFor="name" className="text-sm font-medium">
+                      Nome
+                    </label>
+                    <div className="relative">
+                      <span className="absolute left-3 top-3 text-gray-400">
+                        <User size={16} />
+                      </span>
+                      <Input id="name" placeholder="Seu nome completo" required className="pl-9" />
+                    </div>
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <label htmlFor="email" className="text-sm font-medium">
+                      Email
+                    </label>
+                    <div className="relative">
+                      <span className="absolute left-3 top-3 text-gray-400">
+                        <Mail size={16} />
+                      </span>
+                      <Input id="email" type="email" placeholder="seu.email@exemplo.com" required className="pl-9" />
+                    </div>
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <label htmlFor="phone" className="text-sm font-medium">
+                      Telefone
+                    </label>
+                    <div className="relative">
+                      <span className="absolute left-3 top-3 text-gray-400">
+                        <Phone size={16} />
+                      </span>
+                      <Input id="phone" placeholder="(00) 00000-0000" className="pl-9" />
+                    </div>
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <label htmlFor="message" className="text-sm font-medium">
+                      Mensagem
+                    </label>
+                    <Textarea id="message" placeholder="Digite sua mensagem..." required className="min-h-[120px]" />
+                  </div>
+                  
+                  <div className="flex justify-end">
+                    <Button type="submit">Enviar Mensagem</Button>
+                  </div>
+                </form>
+              </DialogContent>
+            </Dialog>
           </div>
         </div>
       </section>
