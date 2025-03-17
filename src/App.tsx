@@ -13,19 +13,21 @@ const queryClient = new QueryClient();
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
-      <style jsx global>{`
-        @keyframes wave {
-          0% {
-            transform: translateX(0) translateY(0);
+      <style>
+        {`
+          @keyframes wave {
+            0% {
+              transform: translateX(0) translateY(0);
+            }
+            50% {
+              transform: translateX(-25px) translateY(10px);
+            }
+            100% {
+              transform: translateX(0) translateY(0);
+            }
           }
-          50% {
-            transform: translateX(-25px) translateY(10px);
-          }
-          100% {
-            transform: translateX(0) translateY(0);
-          }
-        }
-      `}</style>
+        `}
+      </style>
       <Toaster />
       <Sonner />
       <BrowserRouter>
