@@ -24,16 +24,16 @@ export const sendEmail = async (data: EmailData): Promise<any> => {
       message: data.message,
     };
 
-    // Corrigindo a inicialização do EmailJS
+    // Initialize EmailJS correctly
     emailjs.init(USER_ID);
     
-    // Utilizando o método send corretamente
     const response = await emailjs.send(
       SERVICE_ID,
       TEMPLATE_ID,
       templateParams
     );
     
+    console.log('Email sent successfully:', response);
     return response;
   } catch (error) {
     console.error('Error sending email:', error);
