@@ -1,8 +1,18 @@
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { ShoppingCart, Info } from 'lucide-react';
 import LazyImage from '../components/LazyImage';
 import { toast } from '@/components/ui/use-toast';
+import {
+  Card,
+  CardContent,
+  CardFooter,
+} from "@/components/ui/card";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+} from "@/components/ui/carousel";
 
 interface Product {
   id: number;
@@ -22,7 +32,7 @@ const ProductsPage = () => {
       name: "Água Mineral Natural",
       description: "Nossa água mineral natural sem gás, preservando todos os minerais essenciais para sua saúde e bem-estar.",
       sizes: ["300ml", "500ml", "1L", "1.5L", "2L"],
-      image: "https://images.unsplash.com/photo-1616118132534-381148898bb4?q=80&w=1974&auto=format&fit=crop",
+      image: "/lovable-uploads/cd8bf566-beb3-4f8c-8b4f-de9b291f3f0c.png",
       category: "sem-gas"
     },
     {
@@ -30,23 +40,7 @@ const ProductsPage = () => {
       name: "Água Mineral Com Gás",
       description: "Água mineral naturalmente gaseificada, oferecendo refrescância e sabor para acompanhar suas refeições.",
       sizes: ["300ml", "500ml", "1L"],
-      image: "https://images.unsplash.com/photo-1606168094336-48f8b0c8d191?q=80&w=2070&auto=format&fit=crop",
-      category: "com-gas"
-    },
-    {
-      id: 3,
-      name: "Água Mineral Natural Pack",
-      description: "Pack com 12 unidades da nossa água mineral natural sem gás, ideal para estocar em casa ou no escritório.",
-      sizes: ["12x300ml", "12x500ml", "6x1L"],
-      image: "https://images.unsplash.com/photo-1581244277943-fe4a9c777189?q=80&w=1974&auto=format&fit=crop",
-      category: "sem-gas"
-    },
-    {
-      id: 4,
-      name: "Água Mineral Com Gás Premium",
-      description: "Nossa versão premium com gás natural, com bolhas finas e delicadas para uma experiência sensorial única.",
-      sizes: ["500ml", "1L"],
-      image: "https://images.unsplash.com/photo-1563555338221-a895dc9ae36f?q=80&w=1974&auto=format&fit=crop",
+      image: "/lovable-uploads/cd8bf566-beb3-4f8c-8b4f-de9b291f3f0c.png",
       category: "com-gas"
     },
     {
@@ -56,41 +50,12 @@ const ProductsPage = () => {
       sizes: ["20L"],
       image: "https://images.unsplash.com/photo-1610284248524-5a1e7e30acc7?q=80&w=1974&auto=format&fit=crop",
       category: "galao"
-    },
-    {
-      id: 6,
-      name: "Água Mineral Esportiva",
-      description: "Garrafa especial com tampa esportiva, ideal para quem pratica atividades físicas.",
-      sizes: ["500ml", "750ml"],
-      image: "https://images.unsplash.com/photo-1592205644721-2fe5214a80d4?q=80&w=1974&auto=format&fit=crop",
-      category: "sem-gas"
     }
   ];
 
   const filteredProducts = activeCategory === 'all' 
     ? products 
     : products.filter(product => product.category === activeCategory);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('revealed');
-          }
-        });
-      },
-      { threshold: 0.1 }
-    );
-    
-    document.querySelectorAll('.reveal-on-scroll').forEach(el => {
-      observer.observe(el);
-    });
-    
-    return () => {
-      observer.disconnect();
-    };
-  }, []);
 
   const handleBuyNow = (product: Product) => {
     toast({
@@ -99,16 +64,67 @@ const ProductsPage = () => {
     });
   };
 
+  // Helper function to render a product category section
+  const renderProductCategory = (categoryName: string, title: string, borderColor: string) => {
+    const categoryProducts = products.filter(p => p.category === categoryName);
+    if (categoryProducts.length === 0) return null;
+    
+    return (
+      <div className={`border-2 rounded-xl p-6 mb-12 ${borderColor}`}>
+        <h3 className="text-2xl font-bold mb-6">{title}</h3>
+        <div className="flex flex-wrap justify-center gap-8">
+          {categoryName === 'sem-gas' || categoryName === 'com-gas' ? (
+            <div className="flex flex-col items-center">
+              <div className="flex items-end gap-8 justify-center">
+                <div className="flex flex-col items-center">
+                  <img 
+                    src="/lovable-uploads/cd8bf566-beb3-4f8c-8b4f-de9b291f3f0c.png" 
+                    alt="300ml" 
+                    className="h-48 object-contain"
+                  />
+                  <span className="mt-3 font-medium">300ml</span>
+                </div>
+                <div className="flex flex-col items-center">
+                  <img 
+                    src="/lovable-uploads/cd8bf566-beb3-4f8c-8b4f-de9b291f3f0c.png"
+                    alt="500ml" 
+                    className="h-60 object-contain" 
+                  />
+                  <span className="mt-3 font-medium">500ml</span>
+                </div>
+                <div className="flex flex-col items-center">
+                  <img 
+                    src="/lovable-uploads/cd8bf566-beb3-4f8c-8b4f-de9b291f3f0c.png" 
+                    alt="1,5L" 
+                    className="h-72 object-contain"
+                  />
+                  <span className="mt-3 font-medium">1,5L</span>
+                </div>
+              </div>
+            </div>
+          ) : (
+            // For galao category
+            <div className="flex flex-col items-center">
+              <img 
+                src={categoryProducts[0].image} 
+                alt="Galão 20L" 
+                className="h-72 object-contain"
+              />
+              <span className="mt-3 font-medium">20L</span>
+            </div>
+          )}
+        </div>
+      </div>
+    );
+  };
+
   return (
     <>
-      <section className="py-32 bg-water-50 relative">
+      <section className="py-20 bg-water-50 relative" id="produtos">
         <div className="absolute inset-0 bg-gradient-to-b from-water-100 to-water-50/0"></div>
         <div className="container mx-auto px-6 relative">
           <div className="max-w-4xl mx-auto text-center">
-            <div className="inline-block mb-4 px-4 py-1 bg-water-100 rounded-full border border-water-200 text-water-800 font-medium animate-fade-in">
-              Água de Qualidade
-            </div>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 animate-slide-down" style={{ animationDelay: '0.2s' }}>
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 animate-slide-down text-water-800" style={{ animationDelay: '0.2s' }}>
               Nossos Produtos
             </h1>
             <p className="text-xl text-gray-600 mb-8 animate-slide-down" style={{ animationDelay: '0.4s' }}>
@@ -163,46 +179,63 @@ const ProductsPage = () => {
             </button>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {filteredProducts.map((product) => (
-              <div key={product.id} className="bg-white rounded-xl overflow-hidden shadow-lg reveal-on-scroll transition-all duration-300 hover:shadow-xl border border-gray-100">
-                <div className="relative h-[300px]">
-                  <LazyImage 
-                    src={product.image}
-                    alt={product.name} 
-                    className="h-full"
-                  />
-                </div>
-                <div className="p-6">
-                  <h3 className="text-xl font-semibold mb-2">{product.name}</h3>
-                  <p className="text-gray-600 mb-4">{product.description}</p>
-                  
-                  <div className="mb-6">
-                    <h4 className="text-sm text-gray-500 mb-2">Tamanhos disponíveis</h4>
-                    <div className="flex flex-wrap gap-2">
-                      {product.sizes.map((size) => (
-                        <span key={size} className="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm">
-                          {size}
-                        </span>
-                      ))}
+          {activeCategory === 'all' ? (
+            <div className="space-y-16">
+              {renderProductCategory('sem-gas', 'SEM GÁS', 'border-blue-200')}
+              {renderProductCategory('com-gas', 'COM GÁS', 'border-orange-200')}
+              {renderProductCategory('galao', 'GARRAFÕES', 'border-green-200')}
+            </div>
+          ) : (
+            <>
+              {activeCategory === 'sem-gas' && renderProductCategory('sem-gas', 'SEM GÁS', 'border-blue-200')}
+              {activeCategory === 'com-gas' && renderProductCategory('com-gas', 'COM GÁS', 'border-orange-200')}
+              {activeCategory === 'galao' && renderProductCategory('galao', 'GARRAFÕES', 'border-green-200')}
+            </>
+          )}
+          
+          <div className="mt-24">
+            <h2 className="text-3xl font-bold text-center mb-12">Nossos Produtos em Detalhes</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {filteredProducts.map((product) => (
+                <div key={product.id} className="bg-white rounded-xl overflow-hidden shadow-lg reveal-on-scroll transition-all duration-300 hover:shadow-xl border border-gray-100">
+                  <div className="relative h-[300px]">
+                    <LazyImage 
+                      src={product.image}
+                      alt={product.name} 
+                      className="h-full"
+                    />
+                  </div>
+                  <div className="p-6">
+                    <h3 className="text-xl font-semibold mb-2">{product.name}</h3>
+                    <p className="text-gray-600 mb-4">{product.description}</p>
+                    
+                    <div className="mb-6">
+                      <h4 className="text-sm text-gray-500 mb-2">Tamanhos disponíveis</h4>
+                      <div className="flex flex-wrap gap-2">
+                        {product.sizes.map((size) => (
+                          <span key={size} className="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm">
+                            {size}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                    
+                    <div className="flex gap-3">
+                      <button 
+                        onClick={() => handleBuyNow(product)}
+                        className="flex-1 bg-water-600 hover:bg-water-700 text-white font-medium py-2 px-4 rounded-lg shadow-sm transition-all duration-300 flex items-center justify-center gap-2"
+                      >
+                        <ShoppingCart size={18} />
+                        Comprar Agora
+                      </button>
+                      <button className="bg-water-50 hover:bg-water-100 text-water-700 font-medium py-2 px-4 rounded-lg transition-all duration-300 flex items-center justify-center">
+                        <Info size={18} />
+                      </button>
                     </div>
                   </div>
-                  
-                  <div className="flex gap-3">
-                    <button 
-                      onClick={() => handleBuyNow(product)}
-                      className="flex-1 bg-water-600 hover:bg-water-700 text-white font-medium py-2 px-4 rounded-lg shadow-sm transition-all duration-300 flex items-center justify-center gap-2"
-                    >
-                      <ShoppingCart size={18} />
-                      Comprar Agora
-                    </button>
-                    <button className="bg-water-50 hover:bg-water-100 text-water-700 font-medium py-2 px-4 rounded-lg transition-all duration-300 flex items-center justify-center">
-                      <Info size={18} />
-                    </button>
-                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
       </section>
