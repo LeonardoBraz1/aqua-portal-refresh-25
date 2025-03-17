@@ -12,12 +12,14 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { sendEmail } from '../../utils/emailService';
 
 const ContactSection: React.FC = () => {
   const { toast } = useToast();
   const [isSending, setIsSending] = useState(false);
+  const [formOpen, setFormOpen] = useState(false);
   
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -41,17 +43,19 @@ const ContactSection: React.FC = () => {
       await sendEmail(emailData);
       
       toast({
-        title: "Mensagem enviada!",
-        description: "Entraremos em contato em breve.",
+        title: "Mensagem enviada com sucesso!",
+        description: "Agradecemos seu contato. Retornaremos em breve.",
+        variant: "default",
       });
       
       const form = e.target as HTMLFormElement;
       form.reset();
+      setFormOpen(false);
     } catch (error) {
       console.error("Error sending email:", error);
       toast({
         title: "Erro ao enviar mensagem",
-        description: "Por favor, tente novamente mais tarde.",
+        description: "Por favor, tente novamente mais tarde ou entre em contato por telefone.",
         variant: "destructive",
       });
     } finally {
@@ -69,18 +73,20 @@ const ContactSection: React.FC = () => {
           </p>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-            <div className="bg-gray-50 p-8 rounded-xl shadow-md">
+            <div className="bg-gradient-to-br from-water-50 to-white p-8 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300">
               <h3 className="text-xl font-semibold mb-4">Fale Conosco</h3>
               <p className="mb-6">Nossa equipe está pronta para atendê-lo.</p>
-              <a href="mailto:leonardo.jesus@tramar.com.br" className="text-water-600 hover:underline block mb-3">
-                leonardo.jesus@tramar.com.br
+              <a href="mailto:leonardo.jesus@tramar.com.br" className="text-water-600 hover:text-water-800 hover:underline flex items-center justify-center gap-2 mb-3 transition-colors">
+                <Mail size={18} />
+                <span>leonardo.jesus@tramar.com.br</span>
               </a>
-              <a href="tel:+551146333700" className="text-water-600 hover:underline block">
-                +55 (11) 4633-3700
+              <a href="tel:+551146333700" className="text-water-600 hover:text-water-800 hover:underline flex items-center justify-center gap-2 transition-colors">
+                <Phone size={18} />
+                <span>+55 (11) 4633-3700</span>
               </a>
             </div>
             
-            <div className="bg-gray-50 p-8 rounded-xl shadow-md">
+            <div className="bg-gradient-to-br from-water-50 to-white p-8 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300">
               <h3 className="text-xl font-semibold mb-4">Visite-nos</h3>
               <p className="mb-6">Conheça nossa fábrica e fontes naturais.</p>
               <address className="not-italic text-gray-700">
@@ -90,9 +96,9 @@ const ContactSection: React.FC = () => {
             </div>
           </div>
           
-          <Dialog>
+          <Dialog open={formOpen} onOpenChange={setFormOpen}>
             <DialogTrigger asChild>
-              <Button className="bg-water-600 hover:bg-water-700 text-white px-6 py-3 rounded-full font-medium transition-all duration-300 shadow-lg">Formulário de Contato</Button>
+              <Button className="bg-water-600 hover:bg-water-700 text-white px-8 py-3 rounded-full font-medium transition-all duration-300 shadow-lg">Enviar Mensagem</Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-[425px]">
               <DialogHeader>
@@ -103,46 +109,62 @@ const ContactSection: React.FC = () => {
               </DialogHeader>
               <form onSubmit={handleFormSubmit} className="space-y-4 mt-4">
                 <div className="space-y-2">
-                  <label htmlFor="name" className="text-sm font-medium">
-                    Nome
-                  </label>
+                  <Label htmlFor="name">Nome</Label>
                   <div className="relative">
                     <span className="absolute left-3 top-3 text-gray-400">
                       <User size={16} />
                     </span>
-                    <Input id="name" name="name" placeholder="Seu nome completo" required className="pl-9" />
+                    <Input 
+                      id="name" 
+                      name="name" 
+                      placeholder="Seu nome completo" 
+                      required 
+                      className="pl-9" 
+                    />
                   </div>
                 </div>
                 
                 <div className="space-y-2">
-                  <label htmlFor="email" className="text-sm font-medium">
-                    Email
-                  </label>
+                  <Label htmlFor="email">Email</Label>
                   <div className="relative">
                     <span className="absolute left-3 top-3 text-gray-400">
                       <Mail size={16} />
                     </span>
-                    <Input id="email" name="email" type="email" placeholder="seu.email@exemplo.com" required className="pl-9" />
+                    <Input 
+                      id="email" 
+                      name="email" 
+                      type="email" 
+                      placeholder="seu.email@exemplo.com" 
+                      required 
+                      className="pl-9" 
+                    />
                   </div>
                 </div>
                 
                 <div className="space-y-2">
-                  <label htmlFor="phone" className="text-sm font-medium">
-                    Telefone
-                  </label>
+                  <Label htmlFor="phone">Telefone</Label>
                   <div className="relative">
                     <span className="absolute left-3 top-3 text-gray-400">
                       <Phone size={16} />
                     </span>
-                    <Input id="phone" name="phone" placeholder="(00) 00000-0000" className="pl-9" />
+                    <Input 
+                      id="phone" 
+                      name="phone" 
+                      placeholder="(00) 00000-0000" 
+                      className="pl-9" 
+                    />
                   </div>
                 </div>
                 
                 <div className="space-y-2">
-                  <label htmlFor="message" className="text-sm font-medium">
-                    Mensagem
-                  </label>
-                  <Textarea id="message" name="message" placeholder="Digite sua mensagem..." required className="min-h-[120px]" />
+                  <Label htmlFor="message">Mensagem</Label>
+                  <Textarea 
+                    id="message" 
+                    name="message" 
+                    placeholder="Digite sua mensagem..." 
+                    required 
+                    className="min-h-[120px]" 
+                  />
                 </div>
                 
                 <div className="flex justify-end">

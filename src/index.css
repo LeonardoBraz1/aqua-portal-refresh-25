@@ -172,7 +172,7 @@
     background-repeat: no-repeat;
   }
   
-  /* New wave animation */
+  /* Improved wave animations */
   @keyframes moveWave {
     0% {
       transform: translateX(-25%);
@@ -183,5 +183,21 @@
     100% {
       transform: translateX(-25%);
     }
+  }
+  
+  @keyframes floatWave {
+    0% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
+  
+  .floating {
+    animation: floatWave 3s ease-in-out infinite;
   }
 }
