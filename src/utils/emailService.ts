@@ -2,10 +2,9 @@
 import emailjs from 'emailjs-com';
 
 // Initialize emailjs with your credentials
-// You'll need to get these from the EmailJS dashboard
-const SERVICE_ID = 'your_service_id';
-const TEMPLATE_ID = 'your_template_id';
-const USER_ID = 'your_user_id';
+const SERVICE_ID = 'service_2qrpxxn';
+const TEMPLATE_ID = 'template_47w0y7q';
+const USER_ID = 'yP8sGnvYcxXTAQJMP';
 
 interface EmailData {
   to_email: string;
@@ -25,11 +24,12 @@ export const sendEmail = async (data: EmailData): Promise<any> => {
       message: data.message,
     };
 
+    emailjs.init(USER_ID);
+    
     const response = await emailjs.send(
       SERVICE_ID,
       TEMPLATE_ID,
-      templateParams,
-      USER_ID
+      templateParams
     );
     
     return response;
