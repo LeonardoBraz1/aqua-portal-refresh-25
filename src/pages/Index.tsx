@@ -16,21 +16,18 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { products } from '../data/ProductsData';
-import ProductFilter from '../components/products/ProductFilter';
 import ProductCategorySection from '../components/products/ProductCategorySection';
 import ProductBenefits from '../components/products/ProductBenefits';
 import WholesaleSection from '../components/products/WholesaleSection';
+import { sendEmail } from '../utils/emailService';
 
 const Index = () => {
   const { toast } = useToast();
-  const [activeCategory, setActiveCategory] = React.useState<string>('all');
-
-  const filteredProducts = activeCategory === 'all' 
-    ? products 
-    : products.filter(product => product.category === activeCategory);
+  const [isSending, setIsSending] = React.useState(false);
   
-  const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setIsSending(true);
     
     // Get form data
     const formData = new FormData(e.currentTarget);
@@ -39,17 +36,35 @@ const Index = () => {
     const phone = formData.get('phone') as string;
     const message = formData.get('message') as string;
     
-    // In a real application, you would send this data to a server
-    console.log(`Form submission to leonardo.jesus@tramar.com.br:`, { name, email, phone, message });
-    
-    toast({
-      title: "Mensagem enviada!",
-      description: "Entraremos em contato em breve.",
-    });
-    
-    // Reset form
-    const form = e.target as HTMLFormElement;
-    form.reset();
+    try {
+      const emailData = {
+        to_email: "leonardo.jesus@tramar.com.br",
+        from_name: name,
+        from_email: email,
+        phone: phone,
+        message: message,
+      };
+      
+      await sendEmail(emailData);
+      
+      toast({
+        title: "Mensagem enviada!",
+        description: "Entraremos em contato em breve.",
+      });
+      
+      // Reset form
+      const form = e.target as HTMLFormElement;
+      form.reset();
+    } catch (error) {
+      console.error("Error sending email:", error);
+      toast({
+        title: "Erro ao enviar mensagem",
+        description: "Por favor, tente novamente mais tarde.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSending(false);
+    }
   };
 
   return (
@@ -126,60 +141,26 @@ const Index = () => {
         <div className="container mx-auto px-6">
           <h2 className="text-3xl md:text-4xl font-bold mb-16 text-center text-gray-800 relative inline-block after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-full after:h-1 after:bg-water-500 section-title">Nossos Produtos</h2>
           
-          <ProductFilter 
-            activeCategory={activeCategory}
-            setActiveCategory={setActiveCategory}
-          />
-          
-          {activeCategory === 'all' ? (
-            <div className="space-y-16">
-              <ProductCategorySection 
-                categoryName="sem-gas" 
-                title="SEM GÁS" 
-                borderColor="border-blue-200" 
-                products={products}
-              />
-              <ProductCategorySection 
-                categoryName="com-gas" 
-                title="COM GÁS" 
-                borderColor="border-orange-200" 
-                products={products}
-              />
-              <ProductCategorySection 
-                categoryName="galao" 
-                title="GARRAFÕES" 
-                borderColor="border-green-200" 
-                products={products}
-              />
-            </div>
-          ) : (
-            <>
-              {activeCategory === 'sem-gas' && (
-                <ProductCategorySection 
-                  categoryName="sem-gas" 
-                  title="SEM GÁS" 
-                  borderColor="border-blue-200" 
-                  products={products}
-                />
-              )}
-              {activeCategory === 'com-gas' && (
-                <ProductCategorySection 
-                  categoryName="com-gas" 
-                  title="COM GÁS" 
-                  borderColor="border-orange-200" 
-                  products={products}
-                />
-              )}
-              {activeCategory === 'galao' && (
-                <ProductCategorySection 
-                  categoryName="galao" 
-                  title="GARRAFÕES" 
-                  borderColor="border-green-200" 
-                  products={products}
-                />
-              )}
-            </>
-          )}
+          <div className="space-y-16">
+            <ProductCategorySection 
+              categoryName="sem-gas" 
+              title="SEM GÁS" 
+              borderColor="border-blue-200" 
+              products={products}
+            />
+            <ProductCategorySection 
+              categoryName="com-gas" 
+              title="COM GÁS" 
+              borderColor="border-orange-200" 
+              products={products}
+            />
+            <ProductCategorySection 
+              categoryName="galao" 
+              title="GARRAFÕES" 
+              borderColor="border-green-200" 
+              products={products}
+            />
+          </div>
         </div>
       </section>
       
@@ -305,7 +286,13 @@ const Index = () => {
                   </div>
                   
                   <div className="flex justify-end">
-                    <Button type="submit" className="bg-water-600 hover:bg-water-700 text-white">Enviar Mensagem</Button>
+                    <Button 
+                      type="submit" 
+                      className="bg-water-600 hover:bg-water-700 text-white"
+                      disabled={isSending}
+                    >
+                      {isSending ? "Enviando..." : "Enviar Mensagem"}
+                    </Button>
                   </div>
                 </form>
               </DialogContent>
