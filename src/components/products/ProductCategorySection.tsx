@@ -25,7 +25,7 @@ const ProductCategorySection: React.FC<ProductCategorySectionProps> = ({
       <div className="flex flex-wrap justify-center gap-8">
         {categoryName === 'sem-gas' || categoryName === 'com-gas' ? (
           <div className="flex flex-col items-center">
-            <div className="flex items-end gap-8 justify-center">
+            <div className="flex flex-wrap items-end gap-8 justify-center">
               <div className="flex flex-col items-center">
                 <img 
                   src="/lovable-uploads/cd8bf566-beb3-4f8c-8b4f-de9b291f3f0c.png" 

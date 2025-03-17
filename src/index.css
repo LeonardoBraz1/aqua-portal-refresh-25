@@ -1,10 +1,8 @@
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
- 
+
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -12,122 +10,161 @@
 
     --card: 0 0% 100%;
     --card-foreground: 222.2 84% 4.9%;
- 
+
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
- 
+
     --primary: 222.2 47.4% 11.2%;
     --primary-foreground: 210 40% 98%;
- 
+
     --secondary: 210 40% 96.1%;
     --secondary-foreground: 222.2 47.4% 11.2%;
- 
+
     --muted: 210 40% 96.1%;
     --muted-foreground: 215.4 16.3% 46.9%;
- 
+
     --accent: 210 40% 96.1%;
     --accent-foreground: 222.2 47.4% 11.2%;
- 
+
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
     --ring: 222.2 84% 4.9%;
- 
+
     --radius: 0.5rem;
+
+    --water-50: #f0f9ff;
+    --water-100: #e0f2fe;
+    --water-200: #bae6fd;
+    --water-300: #7dd3fc;
+    --water-400: #38bdf8;
+    --water-500: #0ea5e9;
+    --water-600: #0284c7;
+    --water-700: #0369a1;
+    --water-800: #075985;
+    --water-900: #0c4a6e;
+    --water-950: #082f49;
   }
- 
+
   .dark {
     --background: 222.2 84% 4.9%;
     --foreground: 210 40% 98%;
- 
+
     --card: 222.2 84% 4.9%;
     --card-foreground: 210 40% 98%;
- 
+
     --popover: 222.2 84% 4.9%;
     --popover-foreground: 210 40% 98%;
- 
+
     --primary: 210 40% 98%;
     --primary-foreground: 222.2 47.4% 11.2%;
- 
+
     --secondary: 217.2 32.6% 17.5%;
     --secondary-foreground: 210 40% 98%;
- 
+
     --muted: 217.2 32.6% 17.5%;
     --muted-foreground: 215 20.2% 65.1%;
- 
+
     --accent: 217.2 32.6% 17.5%;
     --accent-foreground: 210 40% 98%;
- 
+
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
- 
+
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
     --ring: 212.7 26.8% 83.9%;
   }
 }
- 
+
 @layer base {
   * {
     @apply border-border;
   }
   body {
     @apply bg-background text-foreground;
-    font-family: 'Inter', sans-serif;
-  }
-  html {
-    scroll-behavior: smooth;
-    scroll-padding-top: 80px; /* Accounts for fixed header */
   }
 }
 
 @layer components {
+  /* Button styles */
   .btn-primary {
-    @apply bg-water-600 hover:bg-water-700 text-white font-medium py-3 px-6 rounded-md transition-colors duration-300 inline-block;
+    @apply bg-water-600 hover:bg-water-700 text-white px-6 py-3 rounded-full font-medium transition-all duration-300 shadow-lg;
   }
   
   .btn-outline {
-    @apply border border-water-600 text-water-600 hover:bg-water-600 hover:text-white font-medium py-3 px-6 rounded-md transition-colors duration-300 inline-block;
+    @apply border-2 border-water-600 text-water-600 hover:bg-water-50 px-6 py-3 rounded-full font-medium transition-all duration-300;
   }
   
+  /* Section titles */
   .section-title {
-    @apply text-3xl font-bold mb-8 text-gray-800 relative inline-block;
+    @apply text-3xl md:text-4xl font-bold mb-6 text-gray-800 relative pb-3 text-center mx-auto;
   }
   
   .section-title::after {
     content: '';
-    @apply block absolute w-1/2 h-1 bg-water-500 bottom-0 left-1/4 -mb-2;
+    @apply absolute left-1/2 -translate-x-1/2 bottom-0 w-24 h-1 bg-water-500;
   }
   
+  /* Glass card effect */
   .glass-card {
-    @apply bg-white/90 backdrop-blur-sm shadow-md border border-gray-100;
+    @apply bg-white shadow-lg rounded-xl relative z-10 overflow-hidden;
+    backdrop-filter: blur(10px);
   }
   
+  /* Navigation link styles */
   .nav-link {
-    @apply relative font-medium hover:text-water-500 transition-colors duration-300 py-2;
+    @apply relative font-medium hover:text-water-500 transition-colors duration-300;
   }
   
   .nav-link.active::after {
     content: '';
-    @apply absolute bottom-0 left-0 w-full h-0.5 bg-water-500 rounded;
+    @apply absolute left-0 bottom-0 w-full h-0.5 bg-water-500 transform scale-x-100 transition-transform duration-300;
   }
   
+  .nav-link::after {
+    content: '';
+    @apply absolute left-0 bottom-0 w-full h-0.5 bg-water-500 transform scale-x-0 transition-transform duration-300;
+  }
+  
+  .nav-link:hover::after {
+    @apply transform scale-x-100;
+  }
+  
+  /* Scroll indicator */
   .scroll-indicator {
-    @apply absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce cursor-pointer z-20;
+    @apply absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce w-10 h-10 flex items-center justify-center rounded-full bg-white/30 backdrop-blur-sm;
   }
   
-  .water-wave {
-    @apply absolute bottom-0 left-0 w-full h-16 bg-white;
-    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z' opacity='.25' class='shape-fill'%3E%3C/path%3E%3Cpath d='M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z' opacity='.5' class='shape-fill'%3E%3C/path%3E%3Cpath d='M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z' class='shape-fill'%3E%3C/path%3E%3C/svg%3E");
-  }
-  
+  /* Product section hover effects */
   .product-card {
-    @apply relative transition-all duration-300 hover:-translate-y-2 group;
+    @apply transition-all duration-300;
   }
   
-  .product-overlay {
-    @apply absolute inset-0 bg-water-800/80 opacity-0 group-hover:opacity-100 flex flex-col justify-end p-6 transition-opacity duration-300;
+  .product-card:hover {
+    @apply transform -translate-y-2;
+  }
+  
+  /* Animation utilities */
+  .reveal-on-scroll {
+    @apply opacity-0 transform translate-y-8 transition-all duration-700;
+  }
+  
+  .reveal-on-scroll.revealed {
+    @apply opacity-100 transform translate-y-0;
+  }
+  
+  /* Water wave effect */
+  .water-wave {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100px;
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="white" fill-opacity="1" d="M0,128L48,138.7C96,149,192,171,288,165.3C384,160,480,128,576,138.7C672,149,768,203,864,213.3C960,224,1056,192,1152,165.3C1248,139,1344,117,1392,106.7L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>');
+    background-size: cover;
+    background-repeat: no-repeat;
   }
 }

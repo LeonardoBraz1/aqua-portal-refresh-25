@@ -2,7 +2,6 @@
 import React from 'react';
 import Navigation from '../components/Navigation';
 import Footer from '../components/Footer';
-import LazyImage from '../components/LazyImage';
 import { ArrowDown, Droplets, Mail, Phone, User } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
@@ -68,25 +67,25 @@ const Index = () => {
               Pura, Refrescante e diretamente da Natureza
             </p>
             <div>
-              <a href="#produtos" className="btn-primary inline-flex items-center gap-2">
+              <a href="#produtos" className="btn-primary inline-flex items-center gap-2 bg-white text-water-600 hover:bg-water-50 px-6 py-3 rounded-full font-medium transition-all duration-300 shadow-lg">
                 Conheça Nossos Produtos <Droplets size={18} />
               </a>
             </div>
           </div>
         </div>
         
-        <a href="#nossa-missao" className="scroll-indicator">
+        <a href="#nossa-missao" className="absolute bottom-8 left-1/2 transform -translate-x-1/2 scroll-indicator animate-bounce w-10 h-10 flex items-center justify-center rounded-full bg-white/30 backdrop-blur-sm">
           <ArrowDown size={24} className="text-white" />
         </a>
         
-        <div className="water-wave"></div>
+        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-white to-transparent water-wave"></div>
       </section>
       
       {/* About Section */}
       <section id="nossa-missao" className="py-20 px-6 bg-white">
         <div className="container mx-auto">
           <div className="max-w-4xl mx-auto text-center">
-            <h2 className="section-title">Nossa Missão</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-6 text-gray-800 relative inline-block after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-full after:h-1 after:bg-water-500 section-title">Nossa Missão</h2>
             <p className="text-lg text-gray-700 mb-10">
               A Águas de Cabreúva está comprometida com a excelência, oferecendo água mineral da mais alta qualidade, 
               extraída de fontes naturais protegidas no coração de Cabreúva. Cada gota representa nosso compromisso 
@@ -94,7 +93,7 @@ const Index = () => {
             </p>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16">
-              <div className="glass-card p-6 rounded-xl">
+              <div className="bg-white shadow-lg rounded-xl p-6">
                 <div className="w-16 h-16 bg-water-100 rounded-full flex items-center justify-center mx-auto mb-4">
                   <Droplets size={32} className="text-water-600" />
                 </div>
@@ -102,7 +101,7 @@ const Index = () => {
                 <p className="text-gray-600">Extraída de fontes naturalmente protegidas, nossa água preserva todos os minerais benéficos para a saúde.</p>
               </div>
               
-              <div className="glass-card p-6 rounded-xl">
+              <div className="bg-white shadow-lg rounded-xl p-6">
                 <div className="w-16 h-16 bg-water-100 rounded-full flex items-center justify-center mx-auto mb-4">
                   <Droplets size={32} className="text-water-600" />
                 </div>
@@ -110,7 +109,7 @@ const Index = () => {
                 <p className="text-gray-600">Rigorosos processos de qualidade garantem que cada garrafa atenda aos mais elevados padrões internacionais.</p>
               </div>
               
-              <div className="glass-card p-6 rounded-xl">
+              <div className="bg-white shadow-lg rounded-xl p-6">
                 <div className="w-16 h-16 bg-water-100 rounded-full flex items-center justify-center mx-auto mb-4">
                   <Droplets size={32} className="text-water-600" />
                 </div>
@@ -118,18 +117,14 @@ const Index = () => {
                 <p className="text-gray-600">Compromisso com práticas responsáveis para preservar nossos recursos hídricos para as futuras gerações.</p>
               </div>
             </div>
-            
-            <div className="mt-16">
-              <a href="#historia" className="btn-outline">Conheça Nossa História</a>
-            </div>
           </div>
         </div>
       </section>
       
       {/* Products Section */}
-      <section id="produtos" className="py-16 bg-white">
+      <section id="produtos" className="py-16 bg-gray-50">
         <div className="container mx-auto px-6">
-          <h2 className="section-title text-center mb-16">Nossos Produtos</h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-16 text-center text-gray-800 relative inline-block after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-full after:h-1 after:bg-water-500 section-title">Nossos Produtos</h2>
           
           <ProductFilter 
             activeCategory={activeCategory}
@@ -191,8 +186,8 @@ const Index = () => {
       {/* Quality Section */}
       <section id="qualidade" className="py-20 px-6 bg-gradient-to-r from-water-100 to-water-200">
         <div className="container mx-auto relative z-10">
-          <div className="max-w-2xl mx-auto glass-card p-10 rounded-xl">
-            <h2 className="section-title text-center mb-8">Compromisso com a Qualidade</h2>
+          <div className="max-w-2xl mx-auto bg-white p-10 rounded-xl shadow-lg">
+            <h2 className="text-3xl md:text-4xl font-bold mb-8 text-center text-gray-800 relative inline-block after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-full after:h-1 after:bg-water-500 section-title">Compromisso com a Qualidade</h2>
             <p className="text-gray-700 mb-6">
               Na Águas de Cabreúva, a qualidade não é apenas uma promessa, é nossa obsessão. Cada gota passa por 
               rigorosos processos de análise e controle antes de chegar até você.
@@ -218,10 +213,6 @@ const Index = () => {
                 <p>Certificações nacionais e internacionais de qualidade.</p>
               </li>
             </ul>
-            
-            <div className="text-center">
-              <a href="#qualidade" className="btn-outline">Saiba Mais</a>
-            </div>
           </div>
         </div>
       </section>
@@ -230,7 +221,7 @@ const Index = () => {
       <section id="contato" className="py-20 px-6 bg-white">
         <div className="container mx-auto">
           <div className="max-w-4xl mx-auto text-center">
-            <h2 className="section-title mb-6">Entre em Contato</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-6 text-gray-800 relative inline-block after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-full after:h-1 after:bg-water-500 section-title">Entre em Contato</h2>
             <p className="text-lg text-gray-700 mb-10">
               Estamos à disposição para atender suas necessidades e responder a todas as suas dúvidas.
             </p>
@@ -260,7 +251,7 @@ const Index = () => {
             {/* Contact Form Dialog */}
             <Dialog>
               <DialogTrigger asChild>
-                <Button className="btn-primary">Formulário de Contato</Button>
+                <Button className="bg-water-600 hover:bg-water-700 text-white px-6 py-3 rounded-full font-medium transition-all duration-300 shadow-lg">Formulário de Contato</Button>
               </DialogTrigger>
               <DialogContent className="sm:max-w-[425px]">
                 <DialogHeader>
@@ -314,7 +305,7 @@ const Index = () => {
                   </div>
                   
                   <div className="flex justify-end">
-                    <Button type="submit">Enviar Mensagem</Button>
+                    <Button type="submit" className="bg-water-600 hover:bg-water-700 text-white">Enviar Mensagem</Button>
                   </div>
                 </form>
               </DialogContent>
