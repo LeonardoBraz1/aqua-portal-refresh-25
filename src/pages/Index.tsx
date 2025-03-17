@@ -1,6 +1,7 @@
 
 import React from 'react';
 import Navigation from '../components/Navigation';
+import Footer from '../components/Footer';
 import LazyImage from '../components/LazyImage';
 import { ArrowDown, Droplets } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -204,6 +205,8 @@ const Index = () => {
           </div>
         </div>
       </section>
+      
+      <Footer />
     </div>
   );
 };
