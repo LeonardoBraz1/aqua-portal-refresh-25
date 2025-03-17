@@ -1,7 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
 import { Facebook, Instagram, Twitter, Menu, X } from 'lucide-react';
-import { Link } from 'react-router-dom';
 
 const Navigation = () => {
   const [isScrolled, setIsScrolled] = useState(false);

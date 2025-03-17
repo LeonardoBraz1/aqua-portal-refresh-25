@@ -1,10 +1,9 @@
 
-import React, { useRef } from 'react';
+import React from 'react';
 import Navigation from '../components/Navigation';
 import Footer from '../components/Footer';
 import LazyImage from '../components/LazyImage';
 import { ArrowDown, Droplets, Mail, Phone, User } from 'lucide-react';
-import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -17,12 +16,33 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
+import { products } from '../data/ProductsData';
+import ProductFilter from '../components/products/ProductFilter';
+import ProductCategorySection from '../components/products/ProductCategorySection';
+import ProductBenefits from '../components/products/ProductBenefits';
+import WholesaleSection from '../components/products/WholesaleSection';
 
 const Index = () => {
   const { toast } = useToast();
+  const [activeCategory, setActiveCategory] = React.useState<string>('all');
+
+  const filteredProducts = activeCategory === 'all' 
+    ? products 
+    : products.filter(product => product.category === activeCategory);
   
   const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    
+    // Get form data
+    const formData = new FormData(e.currentTarget);
+    const name = formData.get('name') as string;
+    const email = formData.get('email') as string;
+    const phone = formData.get('phone') as string;
+    const message = formData.get('message') as string;
+    
+    // In a real application, you would send this data to a server
+    console.log(`Form submission to leonardo.jesus@tramar.com.br:`, { name, email, phone, message });
+    
     toast({
       title: "Mensagem enviada!",
       description: "Entraremos em contato em breve.",
@@ -48,9 +68,9 @@ const Index = () => {
               Pura, Refrescante e diretamente da Natureza
             </p>
             <div>
-              <Link to="#produtos" className="btn-primary inline-flex items-center gap-2">
+              <a href="#produtos" className="btn-primary inline-flex items-center gap-2">
                 Conheça Nossos Produtos <Droplets size={18} />
-              </Link>
+              </a>
             </div>
           </div>
         </div>
@@ -100,61 +120,71 @@ const Index = () => {
             </div>
             
             <div className="mt-16">
-              <Link to="#historia" className="btn-outline">Conheça Nossa História</Link>
+              <a href="#historia" className="btn-outline">Conheça Nossa História</a>
             </div>
           </div>
         </div>
       </section>
       
-      {/* Featured Products */}
-      <section id="produtos" className="py-20 px-6 bg-water-50">
-        <div className="container mx-auto">
+      {/* Products Section */}
+      <section id="produtos" className="py-16 bg-white">
+        <div className="container mx-auto px-6">
           <h2 className="section-title text-center mb-16">Nossos Produtos</h2>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div className="product-card rounded-xl overflow-hidden bg-white shadow-lg">
-              <LazyImage 
-                src="https://images.unsplash.com/photo-1564419320461-6870880221ad?q=80&w=987" 
-                alt="Água Mineral 500ml"
-                className="aspect-[3/4] object-cover"
-              />
-              <div className="product-overlay">
-                <h3 className="text-xl font-bold mb-2">Água Mineral 500ml</h3>
-                <p className="text-white/90 mb-4">Perfeita para o dia a dia, hidratação prática e pura.</p>
-                <Link to="#produtos" className="text-white underline">Ver detalhes</Link>
-              </div>
-            </div>
-            
-            <div className="product-card rounded-xl overflow-hidden bg-white shadow-lg">
-              <LazyImage 
-                src="https://images.unsplash.com/photo-1616118132534-381148898bb4?q=80&w=987" 
-                alt="Água Mineral 1.5L"
-                className="aspect-[3/4] object-cover"
-              />
-              <div className="product-overlay">
-                <h3 className="text-xl font-bold mb-2">Água Mineral 1.5L</h3>
-                <p className="text-white/90 mb-4">Ideal para famílias, hidratação para todos os momentos.</p>
-                <Link to="#produtos" className="text-white underline">Ver detalhes</Link>
-              </div>
-            </div>
-            
-            <div className="product-card rounded-xl overflow-hidden bg-white shadow-lg">
-              <LazyImage 
-                src="https://images.unsplash.com/photo-1606856110002-d0991ce78250?q=80&w=987" 
-                alt="Água Mineral 5L"
-                className="aspect-[3/4] object-cover"
-              />
-              <div className="product-overlay">
-                <h3 className="text-xl font-bold mb-2">Água Mineral 5L</h3>
-                <p className="text-white/90 mb-4">Perfeita para escritórios e consumo residencial.</p>
-                <Link to="#produtos" className="text-white underline">Ver detalhes</Link>
-              </div>
-            </div>
-          </div>
+          <ProductFilter 
+            activeCategory={activeCategory}
+            setActiveCategory={setActiveCategory}
+          />
           
-          <div className="text-center mt-12">
-            <Link to="#produtos" className="btn-primary">Ver Todos os Produtos</Link>
-          </div>
+          {activeCategory === 'all' ? (
+            <div className="space-y-16">
+              <ProductCategorySection 
+                categoryName="sem-gas" 
+                title="SEM GÁS" 
+                borderColor="border-blue-200" 
+                products={products}
+              />
+              <ProductCategorySection 
+                categoryName="com-gas" 
+                title="COM GÁS" 
+                borderColor="border-orange-200" 
+                products={products}
+              />
+              <ProductCategorySection 
+                categoryName="galao" 
+                title="GARRAFÕES" 
+                borderColor="border-green-200" 
+                products={products}
+              />
+            </div>
+          ) : (
+            <>
+              {activeCategory === 'sem-gas' && (
+                <ProductCategorySection 
+                  categoryName="sem-gas" 
+                  title="SEM GÁS" 
+                  borderColor="border-blue-200" 
+                  products={products}
+                />
+              )}
+              {activeCategory === 'com-gas' && (
+                <ProductCategorySection 
+                  categoryName="com-gas" 
+                  title="COM GÁS" 
+                  borderColor="border-orange-200" 
+                  products={products}
+                />
+              )}
+              {activeCategory === 'galao' && (
+                <ProductCategorySection 
+                  categoryName="galao" 
+                  title="GARRAFÕES" 
+                  borderColor="border-green-200" 
+                  products={products}
+                />
+              )}
+            </>
+          )}
         </div>
       </section>
       
@@ -190,7 +220,7 @@ const Index = () => {
             </ul>
             
             <div className="text-center">
-              <Link to="#qualidade" className="btn-outline">Saiba Mais</Link>
+              <a href="#qualidade" className="btn-outline">Saiba Mais</a>
             </div>
           </div>
         </div>
@@ -209,8 +239,8 @@ const Index = () => {
               <div className="bg-gray-50 p-8 rounded-xl shadow-md">
                 <h3 className="text-xl font-semibold mb-4">Fale Conosco</h3>
                 <p className="mb-6">Nossa equipe está pronta para atendê-lo.</p>
-                <a href="mailto:contato@aguasdecabreuva.com.br" className="text-water-600 hover:underline block mb-3">
-                  contato@aguasdecabreuva.com.br
+                <a href="mailto:leonardo.jesus@tramar.com.br" className="text-water-600 hover:underline block mb-3">
+                  leonardo.jesus@tramar.com.br
                 </a>
                 <a href="tel:+551146333700" className="text-water-600 hover:underline block">
                   +55 (11) 4633-3700
@@ -248,7 +278,7 @@ const Index = () => {
                       <span className="absolute left-3 top-3 text-gray-400">
                         <User size={16} />
                       </span>
-                      <Input id="name" placeholder="Seu nome completo" required className="pl-9" />
+                      <Input id="name" name="name" placeholder="Seu nome completo" required className="pl-9" />
                     </div>
                   </div>
                   
@@ -260,7 +290,7 @@ const Index = () => {
                       <span className="absolute left-3 top-3 text-gray-400">
                         <Mail size={16} />
                       </span>
-                      <Input id="email" type="email" placeholder="seu.email@exemplo.com" required className="pl-9" />
+                      <Input id="email" name="email" type="email" placeholder="seu.email@exemplo.com" required className="pl-9" />
                     </div>
                   </div>
                   
@@ -272,7 +302,7 @@ const Index = () => {
                       <span className="absolute left-3 top-3 text-gray-400">
                         <Phone size={16} />
                       </span>
-                      <Input id="phone" placeholder="(00) 00000-0000" className="pl-9" />
+                      <Input id="phone" name="phone" placeholder="(00) 00000-0000" className="pl-9" />
                     </div>
                   </div>
                   
@@ -280,7 +310,7 @@ const Index = () => {
                     <label htmlFor="message" className="text-sm font-medium">
                       Mensagem
                     </label>
-                    <Textarea id="message" placeholder="Digite sua mensagem..." required className="min-h-[120px]" />
+                    <Textarea id="message" name="message" placeholder="Digite sua mensagem..." required className="min-h-[120px]" />
                   </div>
                   
                   <div className="flex justify-end">
@@ -293,6 +323,8 @@ const Index = () => {
         </div>
       </section>
       
+      <ProductBenefits />
+      <WholesaleSection />
       <Footer />
     </div>
   );
