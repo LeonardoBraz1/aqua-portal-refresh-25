@@ -10,7 +10,7 @@ interface ProductsSectionProps {
 const ProductsSection: React.FC<ProductsSectionProps> = ({ products }) => {
   return (
     <section id="produtos" className="py-16 bg-gray-50">
-      <div className="container mx-auto px-6">
+      <div className="container mx-auto">
         <h2 className="text-3xl md:text-4xl font-bold mb-16 text-center text-gray-800 relative inline-block after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-full after:h-1 after:bg-water-500 section-title">Nossos Produtos</h2>
         
         <div className="flex flex-col items-center">

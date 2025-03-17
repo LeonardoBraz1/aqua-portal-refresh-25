@@ -12,7 +12,7 @@ import { products } from '../data/ProductsData';
 
 const Index = () => {
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="w-full min-h-screen flex flex-col">
       <Navigation />
       
       <HeroSection />

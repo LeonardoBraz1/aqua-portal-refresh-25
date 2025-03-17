@@ -3,7 +3,7 @@ import React from 'react';
 
 const QualitySection: React.FC = () => {
   return (
-    <section id="qualidade" className="py-20 px-6 bg-gradient-to-r from-water-100 to-water-200">
+    <section id="qualidade" className="py-20 bg-gradient-to-r from-water-100 to-water-200">
       <div className="container mx-auto relative z-10">
         <div className="max-w-2xl mx-auto bg-white p-10 rounded-xl shadow-lg">
           <h2 className="text-3xl md:text-4xl font-bold mb-8 text-center text-gray-800 relative inline-block after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-full after:h-1 after:bg-water-500 section-title">Compromisso com a Qualidade</h2>

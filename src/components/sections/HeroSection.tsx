@@ -5,7 +5,7 @@ import { ArrowDown, Droplets } from 'lucide-react';
 const HeroSection: React.FC = () => {
   return (
     <section id="home" className="relative min-h-screen bg-gradient-to-b from-water-800 to-water-600 flex items-center">
-      <div className="container mx-auto px-6 relative z-10 py-20">
+      <div className="container mx-auto relative z-10 py-20">
         <div className="max-w-3xl mx-auto text-center">
           <h1 className="text-4xl md:text-6xl font-bold text-white mb-6 drop-shadow-lg">
             Água Mineral Natural
