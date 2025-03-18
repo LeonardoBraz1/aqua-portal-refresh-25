@@ -226,4 +226,4 @@ For more information, see https://radix-ui.com/primitives/docs/components/${t.do
               transform: translateX(0) translateY(0);
             }
           }
-        `}),p.jsxs("div",{className:"w-full",children:[p.jsx(jE,{}),p.jsx(sS,{}),p.jsx(t2,{children:p.jsxs(KC,{children:[p.jsx(nc,{path:"/",element:p.jsx(eP,{})}),p.jsx(nc,{path:"*",element:p.jsx(tP,{})})]})})]})]})});Cg(document.getElementById("root")).render(p.jsx(rP,{}));
+        `}),p.jsxs("div",{className:"w-full",children:[p.jsx(jE,{}),p.jsx(sS,{}),p.jsx(t2,{basename:"/aqua-portal-refresh-25",children:p.jsxs(KC,{children:[p.jsx(nc,{path:"/",element:p.jsx(eP,{})}),p.jsx(nc,{path:"*",element:p.jsx(tP,{})})]})})]})]})});Cg(document.getElementById("root")).render(p.jsx(rP,{}));
