@@ -15,7 +15,7 @@ const ProductsSection: React.FC<ProductsSectionProps> = ({ products }) => {
         
         <div className="flex flex-col items-center">
           <img 
-            src="/public/aguas.png" 
+            src="./public/aguas.png" 
             alt="Produtos de Água Mineral1" 
             className="w-full h-auto object-contain max-w-4xl mb-10 hover:scale-105 transition-transform duration-500"
           />
