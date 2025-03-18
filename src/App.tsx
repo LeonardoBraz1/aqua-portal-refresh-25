@@ -31,7 +31,7 @@ const App = () => (
       <div className="w-full">
         <Toaster />
         <Sonner />
-        <BrowserRouter>
+        <BrowserRouter basename="/aqua-portal-refresh-25">
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="*" element={<NotFound />} />
