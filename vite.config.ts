@@ -14,7 +14,6 @@ export default defineConfig(({ mode }) => ({
     mode === 'development' &&
     componentTagger(),
   ].filter(Boolean),
-  base: "/aqua-portal-refresh-25/", 
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
